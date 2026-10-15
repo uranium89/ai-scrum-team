@@ -20,6 +20,40 @@ Pick your tool, then copy the contents of its `dist/` folder, including hidden f
 cp -R dist/claude/. /path/to/your-project/
 ```
 
+## Quick start
+
+After copying, open your tool in the project and paste the prompts below. The examples are for Claude Code; for other tools, swap the rules file and the "invoke" line using the table. Full instructions per tool: [Claude Code](dist/claude/README.md), [Codex](dist/codex/README.md), [Cursor](dist/cursor/README.md), [OpenCode](dist/opencode/README.md), [Antigravity](dist/antigravity/README.md).
+
+**1. Kickoff** (once per project):
+```
+Kick off a new product: [WHAT YOU WANT, in your own words].
+Act as the orchestrator defined in CLAUDE.md and run the Kickoff.
+Invoke each agent as a subagent, one at a time.
+Ask me the business interview questions and wait for my answers. Then finish the Kickoff and show me the backlog, any decision briefs and the first sprint plan.
+```
+
+**2. Run a sprint** (after you reply "approved" to the sprint plan):
+```
+Run sprint [NN] as defined in CLAUDE.md, story by story.
+Invoke each agent as a subagent, one at a time.
+Stop when the sprint is finished or nothing can proceed, then show me the sprint review.
+```
+
+**3. Quick change** (small, low-risk):
+```
+quick: [the change]
+```
+
+| Tool | Rules file | Invoke line |
+|---|---|---|
+| Claude Code | `CLAUDE.md` | Invoke each agent as a subagent, one at a time. |
+| OpenAI Codex | `AGENTS.md` | Spawn subagent for each step, one at a time, and wait for it to finish. |
+| Cursor | `.cursor/rules/ai-team.mdc` | Invoke each agent with its slash command (/product-owner, /architect, ...), one at a time. |
+| OpenCode | `AGENTS.md` | Invoke each subagent via the Task tool, one at a time. |
+| Google Antigravity | `AGENTS.md` | Use invoke_subagent for each step, one at a time. |
+
+As the stakeholder, you only answer business questions, approve sprint plans, choose options in decision briefs (`decisions/`), and read sprint reviews (`sprints/`). You never review code.
+
 Recommended models: a strong model (e.g. Opus) for product-owner, architect, devsecops and reviewer, and a fast, cheaper model (e.g. Sonnet) for coder, backend-dev, frontend-dev and tester. Each template sets this up in its agent files.
 
 ## Repository layout
