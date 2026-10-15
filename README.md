@@ -2,6 +2,8 @@
 
 An AI Scrum team that builds software for a non-technical stakeholder: a product-owner, architect, coder (or backend and frontend devs), tester, devsecops and reviewer hand work to each other through files. Risky decisions come to you as plain-language decision briefs, and a story is Done only after tests, a security gate, code review and acceptance all pass. Packaged for five AI coding tools.
 
+![AI Scrum Team mind map](assets/mindmap.webp)
+
 ## Use a template
 
 Pick your tool, then copy the contents of its `dist/` folder, including hidden folders, into your project root. Each folder has its own README with the kickoff, sprint and quick-change prompts, and an explanation of what you do as the stakeholder.
@@ -31,6 +33,7 @@ shared/       content common to every tool (edit here first)
 templates/    tool-specific parts only: front matter, file formats, orchestration notes
 dist/         generated, ready-to-copy templates (do not edit by hand)
 scripts/build.py
+assets/       images used by this README
 ```
 
 ## Edit a template
