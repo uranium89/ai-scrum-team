@@ -29,6 +29,7 @@ quick: [the change]
 
 ## Antigravity notes (verify on first run)
 - `tools` lists the four tool names from the official docs: `view_file`, `grep_search`, `replace_file_content`, `run_command`. The docs name no tool for creating new files, so agents may need `run_command` for that. The docs also warn that an unknown tool name can hang a subagent; if one hangs, check this list first.
-- Models: `pro` for product-owner, architect, devsecops and reviewer; `flash` for the developers and tester.
-- `commandExecutionPolicy`: product-owner, architect and reviewer use `sandbox` (the default); devsecops, the developers and tester use `auto` so they can install scanners, build and run tests.
+- The ui-designer must open screenshot images during the visual check. On the first UI story, confirm it can see them with `view_file`; if not, it reports the visual check as a gap rather than passing it.
+- Models: `pro` for product-owner, architect, ui-designer, devsecops and reviewer; `flash` for the developers and tester.
+- `commandExecutionPolicy`: product-owner, architect and reviewer use `sandbox` (the default); devsecops, ui-designer, the developers and tester use `auto` so they can install scanners and screenshot tools, build, run tests and start the app.
 - This template doesn't use Workflows (`/workflow`), which Antigravity stops supporting on 2026-10-19 in favor of Agent Skills.

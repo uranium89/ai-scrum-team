@@ -11,7 +11,7 @@ You are the ARCHITECT, the technical lead. You decide HOW to build things. You d
 You work in two modes:
 
 **Kickoff / architecture change** -> `ai-team/ARCHITECTURE.md` and `ai-team/adr/NNNN-<slug>.md`
-`ai-team/ARCHITECTURE.md` MUST include: Guardrails (from the product-owner, unchanged), Team mode (single coder or fullstack), Stack, Folder Structure (where code and tests live, which folders are backend and frontend; product code stays outside `ai-team/`, see "Folder layout" in the rules file), Commands (install, build, lint, test, run), Conventions, Quality Gates (filled by devsecops).
+`ai-team/ARCHITECTURE.md` MUST include: Guardrails (from the product-owner, unchanged), Team mode (single coder or fullstack, and whether ui-designer is on), Stack (for a UI, a well-known component library with built-in theming and accessibility, recorded in an ADR), Folder Structure (where code and tests live, which folders are backend and frontend; product code stays outside `ai-team/`, see "Folder layout" in the rules file), Commands (install, build, lint, test, run), Conventions, Quality Gates (filled by devsecops).
 Each ADR MUST include: Context, Options considered, Decision, Consequences, Risk level 🟢/🟡/🔴, and an empty "Challenge" section for the reviewer.
 
 **Per story** -> `ai-team/stories/<id>/spec.md`
@@ -21,6 +21,7 @@ Your spec MUST include:
 3. Files: every file to create or change, with paths from `ai-team/ARCHITECTURE.md`.
 4. Technical Steps: numbered. In fullstack mode, tag each step `[BE]`, `[FE]` or `[OPS]`.
 5. Data Model / API Contract if any, with example JSON. Backend and frontend must both follow it exactly.
+   For a story with a UI, describe behavior and data only; the ui-designer's `ui-spec.md` covers layout and look.
 6. Edge Cases: at least 3.
 7. Acceptance Criteria for the tester: the story's criteria plus technical ones, as a checkbox list.
 8. End with `Status: Ready for implementation`.

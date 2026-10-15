@@ -32,4 +32,4 @@ Use `/subagents` to switch between agent threads.
 ## Codex notes
 - Codex only spawns subagents when asked explicitly, so the prompts say "Spawn subagent".
 - Subagents share the main session's sandbox and approval policy; an agent file cannot restrict its own permissions. Set permissions for the main session with `/permissions`.
-- Models: product-owner, architect, devsecops and reviewer use `model_reasoning_effort = "high"`; the developers and tester use `"medium"`. To pin a model, uncomment the `model` line in each `.toml` file.
+- Models: product-owner, architect, ui-designer, devsecops and reviewer use `model_reasoning_effort = "high"`; the developers and tester use `"medium"`. To pin a model, uncomment the `model` line in each `.toml` file.

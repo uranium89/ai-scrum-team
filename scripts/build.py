@@ -10,7 +10,7 @@ path, with these directives expanded (paths are relative to the repo root):
   {{include PATH}}      full contents of PATH
   {{body PATH}}         a shared agent prompt without its front matter
   {{description PATH}}  the `description:` value from a shared agent's front matter
-shared/project/ (backlog, stories, sprints, decisions, architecture, risks + example story)
+shared/project/ (backlog, stories, sprints, decisions, architecture, design, risks + example story)
 is copied into dist/<tool>/ai-team/ for every tool.
 """
 import filecmp

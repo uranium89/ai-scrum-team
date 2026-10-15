@@ -22,6 +22,7 @@ Optional roles (enabled at kickoff and recorded in `ai-team/ARCHITECTURE.md` und
 
 - **fullstack**: when backend and frontend are separate codebases, `coder` is replaced by `backend-dev` (backend folders only) and `frontend-dev` (frontend folders only). Spec tasks are tagged `[BE]`, `[FE]` or `[OPS]`. `backend-dev` runs before `frontend-dev`, and both follow the spec's API contract exactly.
 - `[OPS]` tasks always go to `devsecops`.
+- **ui-designer** (strong): on for every product with a user interface. Writes only to `ai-team/DESIGN.md`, `ai-team/design/`, `ai-team/stories/*/ui-spec.md`, `ai-team/stories/*/ui-review.md`, `ai-team/stories/*/screenshots/` and `ai-team/decisions/`. Owns the design system, writes a UI spec for each story with a UI, and checks the built UI from screenshots. For UI-heavy products, `frontend-dev` (or `coder`) may also run on a strong model.
 
 "Strong" means the most capable model available (planning, judgment, security). "Fast" means a cheaper, faster model (implementation, testing). If possible, run `reviewer` on a model from a different vendor than the coder, so they don't share blind spots.
 
@@ -42,26 +43,29 @@ Optional roles (enabled at kickoff and recorded in `ai-team/ARCHITECTURE.md` und
    - Will it store personal data, payments or other sensitive data? Which countries are the users in?
    - Deadline for a first usable version?
    - Who will maintain it after launch? Any existing systems or accounts it must use?
+   - If the product has screens: 2-3 websites or apps whose look you like, your logo and brand colors if any, the feeling it should give (for example professional, friendly, premium, playful), and whether people will use it mostly on phones or computers. Do you have a designer or design files?
    Record the answers as **Guardrails** in `ai-team/ARCHITECTURE.md`. If unattended, record the stakeholder's original request as the only known guardrail, mark the rest `UNKNOWN`, and treat every decision they would affect as 🔴.
 3. **Backlog** (product-owner): write user stories into `ai-team/stories/` and order them in `ai-team/backlog/BACKLOG.md`.
-4. **Architecture** (architect): choose stack, structure, team mode (single coder or fullstack) and the build, lint and test commands. Write `ai-team/ARCHITECTURE.md` and one ADR per significant decision. Classify every decision with the Risk Process.
+4. **Architecture** (architect): choose stack, structure, team mode (single coder or fullstack, plus ui-designer if the product has a UI), a well-known component library for any UI, and the build, lint and test commands. Write `ai-team/ARCHITECTURE.md` and one ADR per significant decision. Classify every decision with the Risk Process.
 5. **Security gates** (devsecops): install the scanners, record their commands under "Quality Gates" in `ai-team/ARCHITECTURE.md`, add them to CI if the project has CI, and start `ai-team/RISKS.md`.
+6. **Design system** (ui-designer, products with a UI only): install the screenshot and accessibility tools, make 2-3 visual directions as mockups, and send the stakeholder a decision brief to choose one. After the choice, write `ai-team/DESIGN.md`. The product-owner puts a "Design foundation" story (theme, tokens, base layout) first in the backlog; no other UI story starts before it is Done.
 
 ## Sprint Workflow
 
 ```
-SPRINT PLANNING -> for each story: SPEC -> (THREAT MODEL) -> CODE -> TEST -> SECURITY GATE -> REVIEW -> ACCEPTANCE -> SPRINT REVIEW -> RETRO
+SPRINT PLANNING -> for each story: SPEC -> (UI SPEC) -> (THREAT MODEL) -> CODE -> TEST -> (VISUAL CHECK) -> SECURITY GATE -> REVIEW -> ACCEPTANCE -> SPRINT REVIEW -> RETRO
 ```
 
 1. **Sprint planning**: product-owner writes `ai-team/sprints/sprint-NN/plan.md` (sprint goal, ordered stories, what the stakeholder will be able to try). The sprint starts only after the stakeholder replies "approved". When running unattended, only stories already marked `Ready` in an approved plan may be worked on.
-2. **Spec**: architect writes `ai-team/stories/<id>/spec.md`, classifies the story's risk, and writes an ADR first if the story changes the architecture.
+2. **Spec**: architect writes `ai-team/stories/<id>/spec.md`, classifies the story's risk, and writes an ADR first if the story changes the architecture. If the story adds or changes anything users see, ui-designer then writes `ui-spec.md` (screens, states, responsive behavior, UI acceptance criteria).
 3. **Threat model**: if the story touches login, permissions, personal data, payments, file uploads, external input or infrastructure, devsecops writes `threat-model.md` and adds security acceptance criteria to the spec.
-4. **Code**: coder (or backend-dev, then frontend-dev) implements the spec, runs build, lint and existing tests, and writes `impl-notes.md`. Code that does not build is never handed to the tester.
+4. **Code**: coder (or backend-dev, then frontend-dev) implements the spec and `ui-spec.md`, runs build, lint and existing tests, and writes `impl-notes.md`. Code that does not build is never handed to the tester.
 5. **Test**: tester writes and runs tests for every acceptance criterion in `story.md` and `spec.md`, plus edge cases, and writes `test-result.md` with PASS or FAIL.
+   **Visual check** (stories with a `ui-spec.md`): ui-designer runs the app, captures screenshots of every screen and state at mobile and desktop width, runs the accessibility scan, looks at every screenshot, and writes `ui-review.md` with PASS or FAIL.
 6. **Security gate**: devsecops runs every scanner from "Quality Gates" and writes `security.md` with PASS or BLOCKED.
-7. **Review**: reviewer writes `review.md` with `APPROVED` or `NEEDS_FIX`. A FAIL from the tester or BLOCKED from devsecops always means `NEEDS_FIX`. Each `NEEDS_FIX` names a route:
-   - `Route: CODER`: local fix that doesn't change the spec (bug, missed edge case, style). Goes straight back to step 4.
-   - `Route: ARCHITECT`: the spec or design is wrong. Goes back to step 2.
+7. **Review**: reviewer writes `review.md` with `APPROVED` or `NEEDS_FIX`. A FAIL from the tester or the visual check, or BLOCKED from devsecops, always means `NEEDS_FIX`. Each `NEEDS_FIX` names a route:
+   - `Route: CODER`: local fix that doesn't change the spec or UI spec (bug, missed edge case, style, a screen that doesn't match `ui-spec.md`). Goes straight back to step 4.
+   - `Route: ARCHITECT`: the spec, UI spec or design is wrong. Goes back to step 2, to the architect, the ui-designer or both, as the review says.
 8. **Loop limit**: at most **3** `NEEDS_FIX` loops per story. After the third, mark the story `Blocked`, log it in `ai-team/RISKS.md`, and move to the next story.
 9. **Acceptance**: product-owner checks every acceptance criterion against the evidence in `test-result.md` and sets the story to `Done` or back to `Ready` with the reason. On `Done`, the orchestrator commits with message `<story-id>: <title>`.
 10. **Sprint review**: product-owner writes `ai-team/sprints/sprint-NN/review.md` for the stakeholder (format below).
@@ -71,7 +75,7 @@ SPRINT PLANNING -> for each story: SPEC -> (THREAT MODEL) -> CODE -> TEST -> SEC
 - Invoke ONE agent per step, in order, and wait for it to finish. Never run steps in parallel.
 - After each step, read its output file and check the verdict before invoking the next agent.
 - Pass each agent the story ID and loop number. Count `NEEDS_FIX` loops and enforce the limit.
-- Use `coder`, or `backend-dev` then `frontend-dev`, as `ai-team/ARCHITECTURE.md` "Team" says. Send `[OPS]` steps to `devsecops`.
+- Use `coder`, or `backend-dev` then `frontend-dev`, as `ai-team/ARCHITECTURE.md` "Team" says. Send `[OPS]` steps to `devsecops`. Run `ui-designer` for the UI spec and visual check whenever "Team" lists it and the story has a UI.
 - When a story is `Blocked` or waits on a `PENDING` decision, move on to the next story. When nothing can proceed, stop and tell the stakeholder exactly which briefs need an answer.
 - Don't do an agent's job yourself.
 
@@ -105,6 +109,8 @@ A brief has no technical terms the stakeholder would have to look up. If one is 
 
 **Risk acceptance**: only the stakeholder can accept a High or Critical security finding or a broken Guardrail, through a decision brief. Agents never accept risk on the stakeholder's behalf.
 
+**Design checkpoint**: if the brand matters to the business (a consumer product, a premium feel, an existing brand), the product-owner recommends in the first sprint review hiring a human designer for a few hours to review `ai-team/DESIGN.md` and the screenshots, or to provide brand guidelines. The ui-designer follows whatever they deliver.
+
 **Expert checkpoint**: before the first public release of anything with login, payments or personal data, product-owner marks `EXPERT REVIEW NEEDED` at the top of the sprint review and recommends hiring a human security expert or senior engineer. The package for them is `ai-team/ARCHITECTURE.md`, `ai-team/adr/`, the threat models, the latest `security.md` files and `ai-team/RISKS.md`.
 
 ## Quality Gates and Definition of Done
@@ -113,6 +119,7 @@ A story is `Done` only when ALL of these hold, each with evidence:
 - [ ] Build and lint pass (commands from `ai-team/ARCHITECTURE.md`).
 - [ ] Every acceptance criterion has a passing test, or a written manual check if it cannot be automated.
 - [ ] Security gate PASS: no High or Critical findings unless accepted by the stakeholder.
+- [ ] Stories with a UI: visual check PASS, with screenshots of every screen and state at mobile and desktop width, and no serious or critical accessibility violations.
 - [ ] Reviewer verdict `APPROVED`, including architecture conformance.
 - [ ] Product-owner acceptance recorded in `story.md`.
 
@@ -137,12 +144,17 @@ ai-team/
     spec.md                      technical spec and risk level (architect)
     threat-model.md              only for security-relevant stories (devsecops)
     impl-notes.md                what changed and how to run it (coder / backend-dev / frontend-dev)
+    ui-spec.md                   screens, states, responsive behavior (ui-designer, stories with a UI)
     test-result.md               tests, commands, output, PASS/FAIL (tester)
+    ui-review.md                 screenshots checked, accessibility scan, PASS/FAIL (ui-designer)
+    screenshots/                 evidence for the visual check and the sprint review
     security.md                  scanner commands, findings, PASS/BLOCKED (devsecops)
     review.md                    verdict and route (reviewer)
   sprints/sprint-NN/plan.md, review.md, retro.md
   decisions/DEC-NNN-<slug>.md    decision briefs for the stakeholder
   ARCHITECTURE.md                guardrails, team, stack, folder structure, quality gates (shared memory)
+  DESIGN.md                      design direction, tokens, components, visual check commands (ui-designer)
+  design/                        throwaway HTML mockups for visual-direction briefs (ui-designer)
   adr/NNNN-<slug>.md             architecture decision records
   RISKS.md                       risk register
 ```
@@ -155,12 +167,12 @@ ai-team/
 
 **Story files**:
 - Each story file starts with `Status:`. Story statuses: `Draft`, `Ready`, `In Progress`, `Blocked`, `Done`. Step outputs use `PASS`/`FAIL`, `PASS`/`BLOCKED` or `APPROVED`/`NEEDS_FIX`.
-- Never overwrite a previous loop: `impl-notes.md`, `test-result.md`, `security.md` and `review.md` append a new `## Loop N` section each time.
-- Every agent reads `story.md`, `spec.md` and the latest `review.md` of its story before acting.
+- Never overwrite a previous loop: `impl-notes.md`, `test-result.md`, `ui-review.md`, `security.md` and `review.md` append a new `## Loop N` section each time.
+- Every agent reads `story.md`, `spec.md`, `ui-spec.md` if it exists, and the latest `review.md` of its story before acting.
 
 **Sprint review format** (`ai-team/sprints/sprint-NN/review.md`, written for the stakeholder in plain language):
 1. Sprint goal met? Yes / Partly / No.
-2. What you can try now: step-by-step instructions to see each Done story working.
+2. What you can try now: step-by-step instructions to see each Done story working, with links to its latest screenshots for stories with a UI.
 3. Not finished: each story with the reason in one sentence.
 4. Decisions waiting for you: links to `PENDING` briefs.
 5. Top risks: 🟢/🟡/🔴, what could happen to the business, what is being done.
@@ -176,5 +188,5 @@ ai-team/
 - `ai-team/stories/S-000-example-login-rate-limit/` is a worked example of a story and spec. Ignore it when planning real work; delete it once the first real story exists.
 
 ## Orchestration (Antigravity)
-- The roles are custom agents in `.agents/agents/*.md` with `subagent: true`: `product-owner`, `architect`, `coder`, `backend-dev`, `frontend-dev`, `tester`, `devsecops`, `reviewer`.
+- The roles are custom agents in `.agents/agents/*.md` with `subagent: true`: `product-owner`, `architect`, `coder`, `backend-dev`, `frontend-dev`, `ui-designer`, `tester`, `devsecops`, `reviewer`.
 - The primary agent is the orchestrator. It spawns them with `invoke_subagent`, following the Orchestrator rules above.

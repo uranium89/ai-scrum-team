@@ -35,6 +35,7 @@ Use `/subagents` to switch between agent threads.
 | architect | strong | Owns `ai-team/ARCHITECTURE.md` and ADRs, writes a technical spec for each story |
 | coder | fast | Implements the spec and makes sure it builds |
 | backend-dev, frontend-dev | fast | Replace `coder` when backend and frontend are separate codebases (fullstack mode, chosen at kickoff) |
+| ui-designer | strong | On for any product with a user interface: proposes visual styles for you to choose, owns `ai-team/DESIGN.md`, writes a UI spec per story, and checks the built screens from screenshots |
 | tester | fast | Writes and runs tests for every acceptance criterion |
 | devsecops | strong | Runs security scanners as a blocking gate, writes threat models, owns CI and infrastructure config; never deploys |
 | reviewer | strong | Reviews code and architecture conformance, challenges risky decisions, writes the sprint retro |
@@ -42,23 +43,23 @@ Use `/subagents` to switch between agent threads.
 ## What you do as the stakeholder
 
 You never review code or architecture. You only:
-1. **Answer business questions at kickoff**: users, budget, sensitive data, deadline, who maintains it.
+1. **Answer business questions at kickoff**: users, budget, sensitive data, deadline, who maintains it, and for a product with screens, apps or websites whose look you like and your brand colors.
 2. **Approve each sprint plan** by replying "approved".
-3. **Choose an option in decision briefs** (`ai-team/decisions/DEC-*.md`). These come only for 🔴 high-risk decisions and are written in cost, time and risk terms.
-4. **Read the sprint review** (`ai-team/sprints/sprint-NN/review.md`), try the product with the steps it gives, and report any defects you find.
+3. **Choose an option in decision briefs** (`ai-team/decisions/DEC-*.md`). These come only for 🔴 high-risk decisions and are written in cost, time and risk terms. For a product with screens, the first brief asks you to pick a visual style from 2-3 mockups.
+4. **Read the sprint review** (`ai-team/sprints/sprint-NN/review.md`), look at the screenshots, try the product with the steps it gives, and report any defects you find, including anything that looks wrong to you.
 
 ## How a sprint runs
 
 ```
-Kickoff (once): business interview -> backlog -> architecture -> security gates
+Kickoff (once): business interview -> backlog -> architecture -> security gates -> visual style (you choose) -> design system
 Sprint planning -> you approve
 For each story:
-  architect spec -> (devsecops threat model) -> coder -> tester -> devsecops gate -> reviewer -> product-owner acceptance
+  architect spec -> (ui-designer UI spec) -> (devsecops threat model) -> coder -> tester -> (ui-designer visual check) -> devsecops gate -> reviewer -> product-owner acceptance
   NEEDS_FIX: Route CODER (small fix) or Route ARCHITECT (spec wrong), max 3 loops, then Blocked
 Sprint review (for you) -> retro (proposed rule changes, you approve)
 ```
 
-A story is Done only when build, lint, tests, the security gate, the reviewer and the product-owner all pass, each with evidence. For small changes, say `quick: <change>` to skip the sprint ceremonies; the gates still run.
+A story is Done only when build, lint, tests, the visual check (for screens), the security gate, the reviewer and the product-owner all pass, each with evidence. For small changes, say `quick: <change>` to skip the sprint ceremonies; the gates still run.
 
 ## Risk levels
 
@@ -76,9 +77,11 @@ Before the first public release of anything with login, payments or personal dat
 - Security scanners catch known vulnerabilities and common patterns, not every flaw. Authorization and business-logic bugs depend on tests, review and the expert checkpoint.
 - Running unattended needs a permission mode that skips approval prompts. Use git, and preferably a container, so you can undo changes. Agents are told never to deploy or push.
 - 🔴 decisions and sprint approval stop and wait for you. Answer pending briefs before leaving the team running overnight.
-- Cost: four agents use a strong model. Use `quick:` for small changes.
+- The ui-designer makes the UI clean and consistent, not a unique brand. If the brand matters to your business, hire a human designer for a few hours to review `ai-team/DESIGN.md` or give brand guidelines; the team follows them. For UI-heavy products you can also switch `frontend-dev` (or `coder`) to a strong model.
+- The visual check needs a tool that can view images. If yours can't, the ui-designer reports it as a gap instead of passing screens it hasn't seen.
+- Cost: four agents use a strong model, five with ui-designer on. Use `quick:` for small changes.
 
 ## Codex notes
 - Codex only spawns subagents when asked explicitly, so the prompts say "Spawn subagent".
 - Subagents share the main session's sandbox and approval policy; an agent file cannot restrict its own permissions. Set permissions for the main session with `/permissions`.
-- Models: product-owner, architect, devsecops and reviewer use `model_reasoning_effort = "high"`; the developers and tester use `"medium"`. To pin a model, uncomment the `model` line in each `.toml` file.
+- Models: product-owner, architect, ui-designer, devsecops and reviewer use `model_reasoning_effort = "high"`; the developers and tester use `"medium"`. To pin a model, uncomment the `model` line in each `.toml` file.

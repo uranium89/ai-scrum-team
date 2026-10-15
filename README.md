@@ -1,6 +1,6 @@
 # AI Scrum Team Templates
 
-An AI Scrum team that builds software for a non-technical stakeholder: a product-owner, architect, coder (or backend and frontend devs), tester, devsecops and reviewer hand work to each other through files. Risky decisions come to you as plain-language decision briefs, and a story is Done only after tests, a security gate, code review and acceptance all pass. Packaged for five AI coding tools.
+An AI Scrum team that builds software for a non-technical stakeholder: a product-owner, architect, coder (or backend and frontend devs), ui-designer, tester, devsecops and reviewer hand work to each other through files. Risky decisions come to you as plain-language decision briefs, and a story is Done only after tests, a screenshot-based visual check for anything users see, a security gate, code review and acceptance all pass. Packaged for five AI coding tools.
 
 ![AI Scrum Team mind map](assets/mindmap.webp)
 
@@ -31,6 +31,7 @@ your-project/
 │   ├── backlog/  stories/  sprints/
 │   ├── decisions/            briefs waiting for your answer
 │   ├── ARCHITECTURE.md  RISKS.md  adr/
+│   ├── DESIGN.md  design/    design system and style mockups (products with a UI)
 ├── README.md                 your product's README
 └── package.json, src/, tests/ ...   product code, laid out as the architect records in ai-team/ARCHITECTURE.md
                               (fullstack: apps/backend/, apps/frontend/)
@@ -68,18 +69,18 @@ quick: [the change]
 | OpenCode | `AGENTS.md` | Invoke each subagent via the Task tool, one at a time. |
 | Google Antigravity | `AGENTS.md` | Use invoke_subagent for each step, one at a time. |
 
-As the stakeholder, you only answer business questions, approve sprint plans, choose options in decision briefs (`ai-team/decisions/`), and read sprint reviews (`ai-team/sprints/`). You never review code.
+As the stakeholder, you only answer business questions, approve sprint plans, choose options in decision briefs (`ai-team/decisions/`, including picking a visual style from mockups), and read sprint reviews with screenshots (`ai-team/sprints/`). You never review code.
 
-Recommended models: a strong model (e.g. Opus) for product-owner, architect, devsecops and reviewer, and a fast, cheaper model (e.g. Sonnet) for coder, backend-dev, frontend-dev and tester. Each template sets this up in its agent files.
+Recommended models: a strong model (e.g. Opus) for product-owner, architect, ui-designer, devsecops and reviewer, and a fast, cheaper model (e.g. Sonnet) for coder, backend-dev, frontend-dev and tester. Each template sets this up in its agent files.
 
 ## Repository layout
 
 ```
 shared/       content common to every tool (edit here first)
   RULES.md      roles, hard limits, kickoff, sprint workflow, risk process, definition of done, file formats
-  agents/       the eight agent prompts (description + body)
+  agents/       the nine agent prompts (description + body)
   docs/         README sections included in every tool's README
-  project/      the ai-team/ skeleton (backlog, stories, sprints, decisions, architecture, risks) + example story
+  project/      the ai-team/ skeleton (backlog, stories, sprints, decisions, architecture, design, risks) + example story
 templates/    tool-specific parts only: front matter, file formats, orchestration notes
 dist/         generated, ready-to-copy templates (do not edit by hand)
 scripts/build.py

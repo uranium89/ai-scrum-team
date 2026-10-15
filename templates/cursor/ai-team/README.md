@@ -28,7 +28,7 @@ quick: [the change]
 {{include shared/docs/WORKFLOW.md}}
 
 ## Cursor notes
-- Models: product-owner, architect, devsecops and reviewer use `claude-opus-5[effort=high]`; the developers and tester use `composer-2`. If your plan lacks a model, Cursor falls back to a compatible one; set `model: inherit` to use the main session's model. Setting the reviewer to a different vendor's model reduces shared blind spots.
+- Models: product-owner, architect, ui-designer, devsecops and reviewer use `claude-opus-5[effort=high]`; the developers and tester use `composer-2`. If your plan lacks a model, Cursor falls back to a compatible one; set `model: inherit` to use the main session's model. Setting the reviewer to a different vendor's model reduces shared blind spots.
 - Every agent has `readonly: false` because each must write its own output file, so write zones are only instructions.
 - Cursor also reads `.claude/agents/`. If the project has both, `.cursor/agents/` wins on name conflicts.
 - Don't keep other Markdown files in subfolders of `.cursor/agents/`: a known Cursor bug detects them as subagents.

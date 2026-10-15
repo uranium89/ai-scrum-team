@@ -2,7 +2,7 @@
 
 ## Setup
 1. Copy everything in the template folder (`dist/claude/`, the parent of this `ai-team/` folder), including the hidden `.claude/`, into your project root.
-2. Claude Code loads `CLAUDE.md` and the subagents in `.claude/agents/` automatically. Run `/agents` to confirm all eight are listed.
+2. Claude Code loads `CLAUDE.md` and the subagents in `.claude/agents/` automatically. Run `/agents` to confirm all nine are listed.
 
 ## Prompts
 **1. Kickoff** (once per project):
@@ -28,6 +28,6 @@ quick: [the change]
 {{include shared/docs/WORKFLOW.md}}
 
 ## Claude Code notes
-- Models: product-owner, architect, devsecops and reviewer use `model: opus`; coder, backend-dev, frontend-dev and tester use `model: sonnet`. These aliases resolve to the newest model in each family.
+- Models: product-owner, architect, ui-designer, devsecops and reviewer use `model: opus`; coder, backend-dev, frontend-dev and tester use `model: sonnet`. These aliases resolve to the newest model in each family.
 - Agents have every tool available. To restrict one, add a `tools:` list to its front matter.
 - For a reviewer from a different vendor, run the review step in another tool (for example the Codex or OpenCode template) on the same repo.

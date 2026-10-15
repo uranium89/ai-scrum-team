@@ -31,7 +31,7 @@ quick: [the change]
 - This is the template with the strongest permission limits (bash rules: the last matching pattern wins):
   - product-owner, architect and reviewer may run only read-only commands (`rg`, `ls`, `cat`, `git status/diff/log`, `command -v`).
   - devsecops may run the scanners and read-only commands freely; any other command asks you first.
-  - coder, backend-dev, frontend-dev and tester may run any command except `git push`.
+  - coder, backend-dev, frontend-dev, ui-designer and tester may run any command except `git push` (ui-designer needs this to start the app and take screenshots).
 - The `edit` permission cannot be scoped to a folder, so every agent can still write anywhere; write zones are instructions.
 - Models: `anthropic/claude-opus-5-5` for the strong roles, `anthropic/claude-sonnet-5-5` for the developers and tester. Use `provider/model-id` to switch providers; giving the reviewer a different vendor's model reduces shared blind spots.
 - If a project has both `CLAUDE.md` and `AGENTS.md`, OpenCode reads only `AGENTS.md`.

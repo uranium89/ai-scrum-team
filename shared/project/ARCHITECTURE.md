@@ -11,12 +11,14 @@ _Filled by the product-owner from the kickoff business interview. Mark anything 
 - Deadline for first usable version:
 - Who maintains it after launch:
 - Existing systems or accounts to use:
+- Design direction (products with a UI): reference sites or apps, brand colors and logo, desired feeling, phone or computer first, existing designer or design files:
 
 ## Team
 - Mode: single coder | fullstack (backend-dev + frontend-dev)
+- ui-designer: on | off (on for any product with a user interface)
 
 ## Stack
-_Language, framework, database, hosting target. Link the ADR for each choice._
+_Language, framework, database, hosting target, and for a UI the component library. Link the ADR for each choice._
 
 ## Folder Structure
 _Where product code and tests live, following the stack's standard layout at the project root (never inside `ai-team/`). In fullstack mode, list backend folders and frontend folders (default `apps/backend/`, `apps/frontend/`)._
