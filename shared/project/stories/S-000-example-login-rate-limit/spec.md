@@ -23,10 +23,10 @@ API Contract:
 ```
 
 Edge Cases:
-- The client changes IP: accepted limitation, logged in `docs/RISKS.md`.
+- The client changes IP: accepted limitation, logged in `ai-team/RISKS.md`.
 - A correct login after the 15-minute window must be allowed.
 - Memory growth under many distinct IPs: handled by the hourly cleanup.
-- Requests behind a proxy: read the client IP as configured in `docs/ARCHITECTURE.md`, never from a raw `X-Forwarded-For` header.
+- Requests behind a proxy: read the client IP as configured in `ai-team/ARCHITECTURE.md`, never from a raw `X-Forwarded-For` header.
 
 Acceptance Criteria for Tester:
 - [ ] 5 failed logins, then a 6th request, returns 429 with the message above.

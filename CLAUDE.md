@@ -15,8 +15,8 @@ The script needs only the Python standard library (3.9+).
 
 ## Architecture
 
-- `shared/` holds everything common to all tools: `RULES.md`, the eight agent prompts (`shared/agents/*.md`, front matter holds only `description`), README sections (`shared/docs/`), and the project skeleton plus example story (`shared/project/`, copied into every `dist/<tool>/`).
-- `templates/<tool>/` mirrors the output layout exactly and holds only tool-specific parts: agent front matter or TOML fields, the rules-file wrapper and its "Orchestration" section, and the README.
+- `shared/` holds everything common to all tools: `RULES.md`, the eight agent prompts (`shared/agents/*.md`, front matter holds only `description`), README sections (`shared/docs/`), and the project skeleton plus example story (`shared/project/`, copied into every `dist/<tool>/ai-team/`).
+- `templates/<tool>/` mirrors the output layout exactly and holds only tool-specific parts: agent front matter or TOML fields, the rules-file wrapper and its "Orchestration" section, and the README (`templates/<tool>/ai-team/README.md`).
 - `templates/` files pull in shared content with `{{include PATH}}`, `{{body PATH}}` and `{{description PATH}}` (paths relative to the repo root). See the docstring in `scripts/build.py`.
 - `dist/` is generated output. Never edit it by hand.
 

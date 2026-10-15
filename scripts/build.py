@@ -10,7 +10,8 @@ path, with these directives expanded (paths are relative to the repo root):
   {{include PATH}}      full contents of PATH
   {{body PATH}}         a shared agent prompt without its front matter
   {{description PATH}}  the `description:` value from a shared agent's front matter
-shared/project/ (backlog, stories, sprints, decisions, docs + example story) is added to every tool.
+shared/project/ (backlog, stories, sprints, decisions, architecture, risks + example story)
+is copied into dist/<tool>/ai-team/ for every tool.
 """
 import filecmp
 import re
@@ -46,7 +47,7 @@ def render(text):
 def build(out):
     for tool_dir in sorted(p for p in (ROOT / "templates").iterdir() if p.is_dir()):
         dest = out / tool_dir.name
-        shutil.copytree(ROOT / "shared" / "project", dest, ignore=shutil.ignore_patterns(*SKIP))
+        shutil.copytree(ROOT / "shared" / "project", dest / "ai-team", ignore=shutil.ignore_patterns(*SKIP))
         for src in sorted(tool_dir.rglob("*")):
             if src.is_file() and src.name not in SKIP:
                 target = dest / src.relative_to(tool_dir)

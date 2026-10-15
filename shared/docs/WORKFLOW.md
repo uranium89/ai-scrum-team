@@ -3,7 +3,7 @@
 | Agent | Model | Job |
 |---|---|---|
 | product-owner | strong | Interviews you, writes user stories with acceptance criteria, plans sprints, accepts finished work, reports to you in plain language |
-| architect | strong | Owns `docs/ARCHITECTURE.md` and ADRs, writes a technical spec for each story |
+| architect | strong | Owns `ai-team/ARCHITECTURE.md` and ADRs, writes a technical spec for each story |
 | coder | fast | Implements the spec and makes sure it builds |
 | backend-dev, frontend-dev | fast | Replace `coder` when backend and frontend are separate codebases (fullstack mode, chosen at kickoff) |
 | tester | fast | Writes and runs tests for every acceptance criterion |
@@ -15,8 +15,8 @@
 You never review code or architecture. You only:
 1. **Answer business questions at kickoff**: users, budget, sensitive data, deadline, who maintains it.
 2. **Approve each sprint plan** by replying "approved".
-3. **Choose an option in decision briefs** (`decisions/DEC-*.md`). These come only for 🔴 high-risk decisions and are written in cost, time and risk terms.
-4. **Read the sprint review** (`sprints/sprint-NN/review.md`), try the product with the steps it gives, and report any defects you find.
+3. **Choose an option in decision briefs** (`ai-team/decisions/DEC-*.md`). These come only for 🔴 high-risk decisions and are written in cost, time and risk terms.
+4. **Read the sprint review** (`ai-team/sprints/sprint-NN/review.md`), try the product with the steps it gives, and report any defects you find.
 
 ## How a sprint runs
 

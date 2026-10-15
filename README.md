@@ -6,7 +6,7 @@ An AI Scrum team that builds software for a non-technical stakeholder: a product
 
 ## Use a template
 
-Pick your tool, then copy the contents of its `dist/` folder, including hidden folders, into your project root. Each folder has its own README with the kickoff, sprint and quick-change prompts, and an explanation of what you do as the stakeholder.
+Pick your tool, then copy the contents of its `dist/` folder, including hidden folders, into your project root. Each one has its own `ai-team/README.md` with the kickoff, sprint and quick-change prompts, and an explanation of what you do as the stakeholder.
 
 | Tool | Copy from | Rules file | Agents |
 |---|---|---|---|
@@ -20,9 +20,25 @@ Pick your tool, then copy the contents of its `dist/` folder, including hidden f
 cp -R dist/claude/. /path/to/your-project/
 ```
 
+Your project then looks like this. Only the rules file and the agent folder must sit at the root (the tools require it); every workflow document lives in `ai-team/`, so it never mixes with your code or overwrites your `README.md`:
+
+```
+your-project/
+├── CLAUDE.md / AGENTS.md     rules file (tool-specific)
+├── .claude/agents/ ...       agent definitions (tool-specific)
+├── ai-team/                  everything the AI team writes about the work
+│   ├── README.md             prompts and how-to
+│   ├── backlog/  stories/  sprints/
+│   ├── decisions/            briefs waiting for your answer
+│   ├── ARCHITECTURE.md  RISKS.md  adr/
+├── README.md                 your product's README
+└── package.json, src/, tests/ ...   product code, laid out as the architect records in ai-team/ARCHITECTURE.md
+                              (fullstack: apps/backend/, apps/frontend/)
+```
+
 ## Quick start
 
-After copying, open your tool in the project and paste the prompts below. The examples are for Claude Code; for other tools, swap the rules file and the "invoke" line using the table. Full instructions per tool: [Claude Code](dist/claude/README.md), [Codex](dist/codex/README.md), [Cursor](dist/cursor/README.md), [OpenCode](dist/opencode/README.md), [Antigravity](dist/antigravity/README.md).
+After copying, open your tool in the project and paste the prompts below. The examples are for Claude Code; for other tools, swap the rules file and the "invoke" line using the table. Full instructions per tool: [Claude Code](dist/claude/ai-team/README.md), [Codex](dist/codex/ai-team/README.md), [Cursor](dist/cursor/ai-team/README.md), [OpenCode](dist/opencode/ai-team/README.md), [Antigravity](dist/antigravity/ai-team/README.md).
 
 **1. Kickoff** (once per project):
 ```
@@ -52,7 +68,7 @@ quick: [the change]
 | OpenCode | `AGENTS.md` | Invoke each subagent via the Task tool, one at a time. |
 | Google Antigravity | `AGENTS.md` | Use invoke_subagent for each step, one at a time. |
 
-As the stakeholder, you only answer business questions, approve sprint plans, choose options in decision briefs (`decisions/`), and read sprint reviews (`sprints/`). You never review code.
+As the stakeholder, you only answer business questions, approve sprint plans, choose options in decision briefs (`ai-team/decisions/`), and read sprint reviews (`ai-team/sprints/`). You never review code.
 
 Recommended models: a strong model (e.g. Opus) for product-owner, architect, devsecops and reviewer, and a fast, cheaper model (e.g. Sonnet) for coder, backend-dev, frontend-dev and tester. Each template sets this up in its agent files.
 
@@ -63,7 +79,7 @@ shared/       content common to every tool (edit here first)
   RULES.md      roles, hard limits, kickoff, sprint workflow, risk process, definition of done, file formats
   agents/       the eight agent prompts (description + body)
   docs/         README sections included in every tool's README
-  project/      backlog/ stories/ sprints/ decisions/ docs/ skeleton + example story
+  project/      the ai-team/ skeleton (backlog, stories, sprints, decisions, architecture, risks) + example story
 templates/    tool-specific parts only: front matter, file formats, orchestration notes
 dist/         generated, ready-to-copy templates (do not edit by hand)
 scripts/build.py
@@ -84,7 +100,7 @@ Files in `templates/` reference shared content with directives that the build ex
 | `{{body PATH}}` | a shared agent prompt without its front matter |
 | `{{description PATH}}` | the `description:` value from a shared agent's front matter |
 
-To add a tool, create `templates/<tool>/` with its rules file, one agent file per `shared/agents/*.md` and a README, then rebuild. To add a role, add `shared/agents/<role>.md`, a wrapper in every `templates/<tool>/` agents folder, and the role to `shared/RULES.md` and `shared/docs/WORKFLOW.md`.
+To add a tool, create `templates/<tool>/` with its rules file, one agent file per `shared/agents/*.md` and `ai-team/README.md`, then rebuild. To add a role, add `shared/agents/<role>.md`, a wrapper in every `templates/<tool>/` agents folder, and the role to `shared/RULES.md` and `shared/docs/WORKFLOW.md`.
 ## License
 
 [MIT](LICENSE)
