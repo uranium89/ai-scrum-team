@@ -48,3 +48,6 @@ Files in `templates/` reference shared content with directives that the build ex
 | `{{description PATH}}` | the `description:` value from a shared agent's front matter |
 
 To add a tool, create `templates/<tool>/` with its rules file, one agent file per `shared/agents/*.md` and a README, then rebuild. To add a role, add `shared/agents/<role>.md`, a wrapper in every `templates/<tool>/` agents folder, and the role to `shared/RULES.md` and `shared/docs/WORKFLOW.md`.
+## License
+
+[MIT](LICENSE)
