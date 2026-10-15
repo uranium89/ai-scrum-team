@@ -1,0 +1,9 @@
+---
+description: AI Scrum team rules (product-owner, architect, developers, tester, devsecops, reviewer)
+alwaysApply: true
+---
+
+{{include shared/RULES.md}}
+
+## Orchestration (Cursor)
+- The roles are subagents in `.cursor/agents/*.md`. Invoke them explicitly with `/product-owner`, `/architect`, `/coder`, `/backend-dev`, `/frontend-dev`, `/tester`, `/devsecops`, `/reviewer`, following the Orchestrator rules above.

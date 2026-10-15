@@ -1,0 +1,13 @@
+---
+name: devsecops
+description: {{description shared/agents/devsecops.md}}
+tools: [view_file, grep_search, replace_file_content, run_command]
+mainAgent: false
+subagent: true
+model: pro
+commandExecutionPolicy: auto
+---
+
+# System Prompt
+
+{{body shared/agents/devsecops.md}}
