@@ -54,6 +54,14 @@ Optional roles (enabled at kickoff and recorded in `ai-team/ARCHITECTURE.md` und
 5. **Security gates** (devsecops): install the scanners, record their commands under "Quality Gates" in `ai-team/ARCHITECTURE.md`, add them to CI if the project has CI, and start `ai-team/RISKS.md`.
 6. **Design system** (ui-designer, products with a UI only): install the screenshot and accessibility tools, make 2-3 visual directions as mockups, and send the stakeholder a decision brief to choose one. After the choice, write `ai-team/DESIGN.md`. The product-owner puts a "Design foundation" story (theme, tokens, base layout) first in the backlog; no other UI story starts before it is Done.
 
+## Backlog Rule (every request)
+
+Every feature request, change or bug report from the stakeholder becomes a user story in `ai-team/backlog/BACKLOG.md` BEFORE any work starts. No spec, code, test or fix may begin without a story ID.
+- The orchestrator hands each new request to the product-owner first. The product-owner writes `ai-team/stories/<id>/story.md` (a bug is also phrased as "As a <user>, I want <expected behavior>, so that <benefit>", with the observed vs. expected behavior and steps to reproduce under Assumptions or Acceptance Criteria) and adds a row to the backlog.
+- A bug in a story that is already `Done` gets a NEW story that links to the original ID. Never reopen or edit a Done story to hide the defect; it counts in the sprint review metrics.
+- Quick mode shortens the ceremonies, not this rule: the story and its backlog row are still required.
+- Agents who notice extra work (a bug found while testing, a missing feature, tech debt) do not fix it silently. They report it in their output file, and the product-owner adds a story.
+
 ## Sprint Workflow
 
 ```
@@ -83,7 +91,7 @@ SPRINT PLANNING -> for each story: SPEC -> (UI SPEC) -> (THREAT MODEL) -> CODE -
 - When a story is `Blocked` or waits on a `PENDING` decision, move on to the next story. When nothing can proceed, stop and tell the stakeholder exactly which briefs need an answer.
 - Don't do an agent's job yourself.
 
-**Quick mode**: for a small change with no 🔴 risk (bug fix, wording, small tweak), the stakeholder may say "quick: <change>". Skip sprint planning, review and retro; product-owner writes a short story and runs steps 2-9. Quality and security gates are never skipped.
+**Quick mode**: for a small change with no 🔴 risk (bug fix, wording, small tweak), the stakeholder may say "quick: <change>". Skip sprint planning, review and retro; product-owner still writes the story and adds it to the backlog (see Backlog Rule), then runs steps 2-9. Quality and security gates are never skipped.
 
 ## Risk Process
 

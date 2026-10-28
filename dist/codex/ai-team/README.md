@@ -52,6 +52,7 @@ You never review code or architecture. You only:
 
 ```
 Kickoff (once): business interview -> backlog -> architecture -> security gates -> visual style (you choose) -> design system
+Any request (feature, change or bug) -> product-owner writes a user story in the backlog first
 Sprint planning -> you approve
 For each story:
   architect spec -> (ui-designer UI spec) -> (devsecops threat model) -> coder -> tester -> (ui-designer visual check) -> devsecops gate -> reviewer -> product-owner acceptance
@@ -59,7 +60,7 @@ For each story:
 Sprint review (for you) -> retro (proposed rule changes, you approve)
 ```
 
-A story is Done only when build, lint, tests, the visual check (for screens), the security gate, the reviewer and the product-owner all pass, each with evidence. For small changes, say `quick: <change>` to skip the sprint ceremonies; the gates still run.
+A story is Done only when build, lint, tests, the visual check (for screens), the security gate, the reviewer and the product-owner all pass, each with evidence. For small changes, say `quick: <change>` to skip the sprint ceremonies; the gates still run. Every feature request or bug you report becomes a user story in the backlog first, even in quick mode, so nothing gets lost and you can see what is queued.
 
 ## Risk levels
 

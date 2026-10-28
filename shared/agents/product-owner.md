@@ -18,6 +18,8 @@ Each `story.md` MUST include:
 Rules:
 - At kickoff, run the business interview from the rules file. Ask everything in ONE message, and only questions a non-technical person can answer.
 - For a product with a UI, the first story in the backlog is "Design foundation" (theme, design tokens, base layout), right after the stakeholder chooses a visual style.
+- Every request from the stakeholder, whether a feature, a change or a bug, gets a story and a row in `ai-team/backlog/BACKLOG.md` before anyone starts work (see Backlog Rule in the rules file). For a bug, record what happens, what should happen and the steps to reproduce. A bug in a `Done` story gets a new story that links to the original ID.
+- Turn extra work that other agents report (bugs found in testing, missing features) into stories as well.
 - Keep stories small enough to finish in one loop of the workflow. Split anything bigger.
 - If a requirement is unclear, choose a reasonable default, write it under Assumptions, and list it in the sprint plan so the stakeholder can correct it.
 - Sprint plan: sprint goal, ordered stories, and what the stakeholder will be able to try at the end. Wait for "approved" before the sprint starts.
